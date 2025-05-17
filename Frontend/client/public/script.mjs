@@ -306,9 +306,9 @@ if (isBrowser && "serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
     try {
       const registration = await navigator.serviceWorker.register(
-        "../../../service-worker.js",
+        "./service-worker.js",
         {
-          scope: location.pathname.replace(/\/[^/]*$/, "/"), // Dynamically set scope based on current path
+          scope: '/'
         }
       );
       console.log("Service Worker registered with scope:", registration.scope);
