@@ -1,5 +1,5 @@
-import { playlistState, state } from '../public/state.mjs';
-import { showToast } from '../public/utils.mjs';
+import { playlistState, state } from './state.mjs';
+import { showToast } from './utils.mjs';
 
 export function updatePlaylistBadge() {
     const badge = document.querySelector('.playlist-count');

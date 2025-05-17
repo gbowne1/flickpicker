@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="./styles.css">
     
     <!-- Web app manifest -->
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="/favicon.png" type="image/x-icon">
 
     <meta name="robots" content="index,follow">
@@ -67,7 +67,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" href="/">
                     <div class="brand-container d-flex align-items-center">
-                        <img src="../public/assets/logos/logo.svg" alt="FlickPicker Logo" width="30" height="24" class="brand-logo">
+                        <img src="assets/logos/logo.svg" alt="FlickPicker Logo" width="30" height="24" class="brand-logo">
                         <span class="brand-text ms-2">FlickPicker</span>
                     </div>
                 </a>
@@ -92,7 +92,7 @@
                                     required
                                     minlength="2"
                                     autocomplete="off">
-                                <button class="btn btn-outline-success" type="submit" id="searchButton" disabled>
+                                <button class="btn btn-outline-success" type="submit" id="searchButton">
                                     <i class="fas fa-search" aria-hidden="true"></i>
                                     <span class="visually-hidden">Search</span>
                                 </button>
@@ -211,7 +211,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <a href="/" class="text-light text-decoration-none">
-                        <img src="/logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
+                        <img src="assets/logos/logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
                     </a>
                     <small class="d-block mt-2">&copy; 2024 MovieNight. All rights reserved.</small>
                 </div>
@@ -650,22 +650,22 @@
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/js/all.min.js" integrity="sha256-qq1ob4lpAizCQs1tkv5gttMXUlgpiHyvG3JcCIktRvs=" crossorigin="anonymous"></script>
 
     <!-- Custom modules (order based on dependencies) -->
-    <script type="module" src="../public/script.mjs"></script>
-    <script type="module" src="../public/app.mjs"></script>
-    <script type="module" src="../public/auth.mjs"></script>
-    <script type="module" src="../public/index.mjs"></script>
-    <script type="module" src="../public/movies.mjs"></script>
-    <script type="module" src="../public/playlist.mjs"></script>
-    <script type="module" src="../public/profile.mjs"></script>
-    <script type="module" src="../public/search.mjs"></script>
-    <script type="module" src="../public/state.mjs"></script>
-    <script type="module" src="../public/utils.mjs"></script>
+    <script type="module" src="script.mjs"></script>
+    <script type="module" src="app.mjs"></script>
+    <script type="module" src="auth.mjs"></script>
+    <script type="module" src="index.mjs"></script>
+    <script type="module" src="movies.mjs"></script>
+    <script type="module" src="playlist.mjs"></script>
+    <script type="module" src="profile.mjs"></script>
+    <script type="module" src="./search.mjs"></script>
+    <script type="module" src="./state.mjs"></script>
+    <script type="module" src="utils.mjs"></script>
     <script type="module">
-        import { loadMovies } from '../public/loadMovies.mjs';
+        import { loadMovies } from './loadMovies.mjs';
     
         document.addEventListener('DOMContentLoaded', () => {
             loadMovies(); // Dynamically loads and renders movies
-        });
+        }, {once: true});
     </script>
 
     <!-- Service Worker (last script) -->

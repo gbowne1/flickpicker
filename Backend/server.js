@@ -51,7 +51,7 @@ app.get('/search-movies', async (req, res) => {
 
     try {
         // Read the movie list from the JSON file
-        const filePath = path.join(__dirname, '..', 'Data', 'movieList.json');
+        const movieListPath = path.join(__dirname, '..', 'Data', 'movieList.json');
         let movieList = JSON.parse(await fs.readFile(movieListPath, 'utf8'));
 
         // Ensure movieList is an array before proceeding

@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
     script.onerror = function() {
       console.error('Failed to load Google API client');
     };
-});
+}, {once: true});
 
 // Handle playlist selection change
 document.getElementById('playlist-select').addEventListener('change', function() {
@@ -231,4 +231,4 @@ function loadYouTubeApi() {
 }
 
 // Initialize when document is ready
-document.addEventListener('DOMContentLoaded', loadYouTubeApi);
+document.addEventListener('DOMContentLoaded', loadYouTubeApi, {once: true});

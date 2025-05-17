@@ -1,10 +1,10 @@
-import { state } from "../public/state.mjs";
-import { showToast } from "../public/utils.mjs";
-import { login, logout, isAuthenticated, initializeAuth, loadUserFromSession } from "../public/auth.mjs";
-import { addToPlaylist } from "../public/playlist.mjs";
-import { searchMovies } from "../public/search.mjs";
-import { displayMovies, updateMovieDisplay } from "../public/movies.mjs";
-import { togglePasswordVisibility, updateAuthUI, closeModal, handleMovieSearch, toggleTheme } from "../public/ui.mjs";
+import { state } from "./state.mjs";
+import { showToast } from "./utils.mjs";
+import { login, logout, isAuthenticated, initializeAuth, loadUserFromSession } from "./auth.mjs";
+import { addToPlaylist } from "./playlist.mjs";
+import { searchMovies } from "./search.mjs";
+import { displayMovies, updateMovieDisplay } from "./movies.mjs";
+import { togglePasswordVisibility, updateAuthUI, closeModal, handleMovieSearch, toggleTheme } from "./ui.mjs";
 
 const isBrowser = typeof window !== "undefined";
 const isNode = typeof window === "undefined";
@@ -26,9 +26,7 @@ if (isBrowser) {
   displayMovies(movies);
 
   // Event listener for search input
-  document
-    .getElementById("movieSearch")
-    .addEventListener("input", searchMovies);
+  searchMovies();
 
   // Expose saveMoviesToFile to the global scope
   window.saveMoviesToFile = saveMoviesToFile;
@@ -387,7 +385,7 @@ if (isBrowser)
     if (movieGrid) {
       movieGrid.addEventListener("click", handleMovieInteraction);
     }
-  });
+  }, {once: true});
 const filterSelects = document.querySelectorAll("#filter-section select");
 if (filterSelects) {
   filterSelects.forEach((select) => {

@@ -172,6 +172,6 @@ class ProfileManager {
 // Initialize the profile manager when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     const profileManager = new ProfileManager();
-});
+}, {once: true});
 
 export default ProfileManager;

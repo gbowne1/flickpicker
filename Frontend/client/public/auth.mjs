@@ -137,7 +137,7 @@ export function initializeAuth() {
 // Event listener for page load
 document.addEventListener('DOMContentLoaded', () => {
     initializeAuth();
-});
+}, {once: true});
 
 
 // Initialize IndexedDB for role storage
