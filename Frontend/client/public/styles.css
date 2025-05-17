@@ -96,11 +96,8 @@ main {
 /* ================================
  Movie Grid
 ================================= */
-#movie-grid {
-  display: grid;
-  gap: 1.5rem;
+#movie-table {
   padding-top: 0.5rem;
-  width: 100%;
 }
 
 .movies-header {
@@ -303,10 +300,6 @@ footer a:hover {
     height: 1.25rem;
   }
 
-  #movie-grid {
-    gap: 1rem;
-  }
-
   .card-img-top {
     height: 15rem;
   }
@@ -331,22 +324,6 @@ footer a:hover {
 
   .modal-header {
     border-radius: 0;
-  }
-}
-
-/* ================================
- Grid Layout Improvements
-================================= */
-#movie-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
-  gap: 1.5rem;
-  width: 100%;
-}
-
-@supports (grid-template-columns: subgrid) {
-  #movie-grid {
-    grid-template-columns: subgrid;
   }
 }
 
