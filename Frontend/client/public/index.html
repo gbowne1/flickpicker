@@ -61,11 +61,11 @@
     <meta name="twitter:url" content="https://yourdomain.com">
     <link rel="alternate" type="application/ld+json" href="../structured-data.json">
 </head>
-<body class="light | dark">
+<body>
     <header>
-        <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" role="navigation" aria-label="Main Navigation" data-bs-theme="dark">
+        <nav class="navbar navbar-expand-lg bg-body text-body border-bottom border-body" role="navigation" aria-label="Main Navigation">
             <div class="container-fluid">
-                <a class="navbar-brand d-flex align-items-center" href="/">
+                <a class="navbar-brand d-flex align-items-center bg-dark px-2 rounded" href="/">
                     <div class="brand-container d-flex align-items-center">
                         <img src="../public/assets/logos/logo.svg" alt="FlickPicker Logo" width="30" height="24" class="brand-logo">
                         <span class="brand-text ms-2">FlickPicker</span>
@@ -98,18 +98,18 @@
                                 </button>
                             </div>
                         </form>
-                        <button id="themeToggle" class="btn btn-outline-light me-3" type="button" aria-label="Toggle theme">
-                            <i class="fas fa-sun"></i>
+                        <button id="themeToggle" class="btn btn-outline-contrast me-3" type="button" aria-label="Toggle theme">
+                            <i style="width: 1em;"></i>
                         </button>
                         <!-- Authentication Buttons -->
                         <div id="auth-buttons">
-                            <button class="btn btn-outline-light" type="button" data-bs-toggle="modal"
+                            <button class="btn btn-outline-contrast" type="button" data-bs-toggle="modal"
                                 data-bs-target="#loginModal" id="loginButton">
                                 <i class="fas fa-user" aria-hidden="true"></i>
                                 <span>Login</span>
                             </button>
                             <div class="dropdown d-none" id="userMenu">
-                                <button class="btn btn-outline-light dropdown-toggle" type="button"
+                                <button class="btn btn-outline-contrast dropdown-toggle" type="button"
                                     id="userMenuButton"
                                     data-bs-toggle="dropdown"
                                     aria-haspopup="true"
@@ -206,11 +206,11 @@
           </div>
       </section>
     </main>
-    <footer class="footer mt-auto py-3 bg-dark text-light">
+    <footer class="footer mt-auto py-3 bg-body text-body">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <a href="/" class="text-light text-decoration-none">
+                    <a href="/" class="text-body text-decoration-none">
                         <img src="/logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
                     </a>
                     <small class="d-block mt-2">&copy; 2024 MovieNight. All rights reserved.</small>
@@ -218,15 +218,15 @@
                 <div class="col-md-4">
                     <h5>Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="/about" class="text-light">About</a></li>
-                        <li><a href="/privacy" class="text-light">Privacy Policy</a></li>
-                        <li><a href="/terms" class="text-light">Terms of Service</a></li>
+                        <li><a href="/about" class="text-body">About</a></li>
+                        <li><a href="/privacy" class="text-body">Privacy Policy</a></li>
+                        <li><a href="/terms" class="text-body">Terms of Service</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">
                     <h5>Follow Us</h5>
                     <div class="social-links">
-                        <a href="#" class="text-light me-2" aria-label="Discord">
+                        <a href="#" class="text-body me-2" aria-label="Discord">
                             <i class="fab fa-discord" aria-hidden="true"></i>
                         </a>
                         <!-- Other social links -->

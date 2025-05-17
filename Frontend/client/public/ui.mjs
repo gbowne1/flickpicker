@@ -34,15 +34,47 @@ export function handleMovieSearch() {
     }
 }
 
-// Theme toggle for light/dark mode
+const getStoredTheme = () => localStorage.getItem('theme');
+const setStoredTheme = (theme) => localStorage.setItem('theme', theme);
+
+export const getPreferredTheme = () => {
+    const storedTheme = getStoredTheme()
+    if (storedTheme) {
+      return storedTheme
+    }
+
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+};
+
+export const setTheme = theme => {
+    if (theme === 'auto') {
+        document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
+    } else {
+        if (theme !== 'dark') {
+            theme = 'light';
+        }
+        document.documentElement.setAttribute('data-bs-theme', theme)
+    }
+    setStoredTheme(theme);
+}
+
+// Initialize the theme
+export function initTheme() {
+    const theme = getPreferredTheme();
+    setTheme(theme);
+}
+
 // Theme toggle for light/dark mode
 export function toggleTheme() {
-    const icon = document.querySelector('#themeToggle i');
-    icon.classList.toggle('fa-sun');
-    icon.classList.toggle('fa-moon');
+    const icon = document.querySelector('#themeToggle svg');
+    if (icon) {
+        icon.classList.toggle('fa-sun');
+        icon.classList.toggle('fa-moon');
+    }
 
-    // Optional: Toggle actual theme classes here
-    document.body.classList.toggle('dark-theme');
+    const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
 }
 
 // Update the UI based on authentication status
