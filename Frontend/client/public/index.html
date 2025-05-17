@@ -246,50 +246,50 @@
                     <form id="add-movie-form">
                         <div class="mb-3">
                             <label for="title" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="title" required>
+                            <input type="text" class="form-control" name="title" id="title" required>
                         </div>
                         <div class="row mb-3">
                             <div class="col-6">
                                 <label for="dateWatched" class="form-label">Date Watched</label>
-                                <input type="date" class="form-control" id="dateWatched" required>
+                                <input type="date" class="form-control" name="dateWatched" id="dateWatched" required>
                             </div>
                             <div class="col-6">
                                 <label for="year" class="form-label">Year</label>
-                                <input type="number" class="form-control" id="year" required>
+                                <input type="number" class="form-control" name="year" id="year" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-6">
                                 <label for="category" class="form-label">Category</label>
-                                <input type="text" class="form-control" id="category" required>
+                                <input type="text" class="form-control" name="category" id="category" required>
                             </div>
                             <div class="col-6">
                                 <label for="trailerLink" class="form-label">Trailer Link</label>
-                                <input type="url" class="form-control" id="trailerLink" required>
+                                <input type="url" class="form-control" name="trailerLink" id="trailerLink" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-6">
                                 <label for="movieLink" class="form-label">Movie Link</label>
-                                <input type="url" class="form-control" id="movieLink" required>
+                                <input type="url" class="form-control" name="movieLink" id="movieLink" required>
                             </div>
                             <div class="col-6">
                                 <label for="modernTrailerLink" class="form-label">Modern Trailer Link</label>
-                                <input type="url" class="form-control" id="modernTrailerLink" required>
+                                <input type="url" class="form-control" name="modernTrailerLink" id="modernTrailerLink" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-4">
                                 <label for="requestedBy" class="form-label">Requested By</label>
-                                <input type="text" class="form-control" id="requestedBy" required>
+                                <input type="text" class="form-control" name="requestedBy" id="requestedBy" required>
                             </div>
                             <div class="col-4">
                                 <label for="language" class="form-label">Language</label>
-                                <input type="text" class="form-control" id="language" required>
+                                <input type="text" class="form-control" name="language" id="language" required>
                             </div>
                             <div class="col-4">
                                 <label for="subtitles" class="form-label">Subtitles</label>
-                                <select class="form-select" id="subtitles" required>
+                                <select class="form-select" name="subtitles" id="subtitles" required>
                                     <option value="true">Yes</option>
                                     <option value="false">No</option>
                                 </select>
@@ -298,18 +298,18 @@
                         <div class="row mb-3">
                             <div class="col-6">
                                 <label for="imdbLink" class="form-label">IMDB Link</label>
-                                <input type="url" class="form-control" id="imdbLink" required>
+                                <input type="url" class="form-control" name="imdbLink" id="imdbLink" required>
                             </div>
                             <div class="col-6">
                                 <label for="tmdbLink" class="form-label">TMDB Link</label>
-                                <input type="url" class="form-control" id="tmdbLink" required>
+                                <input type="url" class="form-control" name="tmdbLink" id="tmdbLink" required>
                             </div>
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Save Movie</button>
+                        </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button class="btn btn-success" onclick="saveMoviesToFile()">Save Movies</button>
                 </div>
             </div>
         </div>
@@ -661,10 +661,20 @@
     <script type="module" src="../public/state.mjs"></script>
     <script type="module" src="../public/utils.mjs"></script>
     <script type="module">
-        import { loadMovies } from '../public/loadMovies.mjs';
+        import { loadMovies } from './loadMovies.mjs';
     
         document.addEventListener('DOMContentLoaded', () => {
-            loadMovies(); // Dynamically loads and renders movies
+            loadMovies();
+        });
+
+        import { saveMovie } from './script.mjs';
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("add-movie-form");
+            if (form) {
+                form.addEventListener("submit", saveMovie);
+            } else {
+                console.error("Form with id 'add-movie-form' not found.");
+            }
         });
     </script>
 

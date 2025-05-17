@@ -1,5 +1,5 @@
 import express from 'express';
-import bodyParser from 'body-parser';
+import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import routes from './routes.js';
@@ -9,8 +9,9 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// Middleware to parse JSON bodies
-app.use(bodyParser.json());
+app.use(cors()); 
+
+app.use(express.json());
 
 // Serve static files
 app.use(express.static(path.join(__dirname, '../Frontend/client/public')));

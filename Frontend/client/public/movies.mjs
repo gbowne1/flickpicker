@@ -1,5 +1,5 @@
-import { state } from '../public/state.mjs';
-import { showError } from '../public/utils.mjs';
+import { state } from './state.mjs';
+import { showError } from './utils.mjs';
 
 // Check if running in a browser environment
 const isBrowser = typeof window !== 'undefined';

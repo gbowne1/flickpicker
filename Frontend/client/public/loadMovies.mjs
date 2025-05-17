@@ -163,7 +163,8 @@ async function loadFromCacheStorage() {
 // Load movies from JSON file served from localhost
 async function loadFromJson() {
     try {
-        const response = await fetch('http://localhost:3000/movieList.json');
+        console.log('Loading movies from JSON file...');
+        const response = await fetch('http://localhost:3000/movies');
         console.log('API Response status:', response.status);
         
         if (!response.ok) {

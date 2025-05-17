@@ -31,7 +31,7 @@ if (isBrowser) {
     .addEventListener("input", searchMovies);
 
   // Expose saveMoviesToFile to the global scope
-  window.saveMoviesToFile = saveMoviesToFile;
+  window.saveMovie = saveMovie;
 }
 
 // Filtering and Sorting
@@ -71,33 +71,57 @@ export function sortMovies(criteria) {
   });
 }
 
-export async function saveMoviesToFile() {
-  const movieList = isBrowser
-    ? localStorage.getItem("movieList")
-      ? JSON.parse(localStorage.getItem("movieList"))
-      : []
-    : [];
+export async function saveMovie(event) {
+  event.preventDefault(); // Prevent form submission
+  console.log("saveMovie function triggered");
+  const form = document.getElementById("add-movie-form");
+  const formData = new FormData(form);
 
-  // Send the data to the server using fetch
-  fetch("http://localhost:3000/save-movies", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  const movieData = {
+    id: Date.now(), // Generate unique ID
+    title: formData.get("title"),
+    dateWatched: formData.get("dateWatched"),
+    watched: false,
+    year: formData.get("year"),
+    category: formData.get("category"),
+    trailerLink: formData.get("trailerLink"),
+    movieLink: formData.get("movieLink"),
+    modernTrailerLink: formData.get("modernTrailerLink"),
+    requestedBy: {
+      userId: "anonymous",
+      username: formData.get("requestedBy"),
+      platform: "Web",
     },
-    body: JSON.stringify(movieList),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.success) {
-        alert("Movies saved successfully!");
-      } else {
-        alert("Failed to save movies.");
-      }
-    })
-    .catch((error) => {
-      console.error("Error saving movies:", error);
-      alert("Error saving movies.");
+    language: formData.get("language"),
+    subtitles: formData.get("subtitles") === "true",
+    voteCount: 0,
+    imageUrl: "",
+    runtime: "",
+    ratings: "",
+    trailerPrivate: false,
+    moviePrivate: false,
+  };
+  console.log("Movie data to be saved:", movieData);
+
+  try {
+    const response = await fetch("http://localhost:3000/save-movie", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(movieData),
     });
+
+    if (!response.ok) {
+      throw new Error("Failed to save movie");
+    }
+
+    alert("Movie saved successfully!");
+    form.reset(); // Reset the form
+  } catch (error) {
+    console.error("Error saving movie:", error);
+    alert("Failed to save movie. Please try again.");
+  }
 }
 
 export async function loadMovieFromFile() {
@@ -171,82 +195,6 @@ export function handleVote(movieId, voteType) {
   // Implement voting logic here
   console.log(`Vote ${voteType} for movie ${movieId}`);
   // Update UI or make API call to record vote
-}
-
-export async function handleAddMovie(event) {
-  event.preventDefault();
-
-  // Gather data from the modal form
-  const movieData = {
-    id: Date.now(), // Generate unique ID
-    title: document.getElementById("title").value,
-    dateWatched: document.getElementById("dateWatched").value,
-    watched: false,
-    year: parseInt(document.getElementById("year").value),
-    category: document.getElementById("category").value,
-    trailerLink: document.getElementById("trailerLink").value,
-    movieLink: document.getElementById("movieLink").value,
-    modernTrailerLink: document.getElementById("modernTrailerLink").value,
-    tmdbLink: document.getElementById("tmdbLink").value,
-    imdbLink: document.getElementById("imdbLink").value,
-    requestedBy: {
-      userId: state.currentUser?.id || "anonymous",
-      username: document.getElementById("requestedBy").value,
-      platform: "Web",
-    },
-    language: document.getElementById("language").value,
-    subtitles: document.getElementById("subtitles").value === "true",
-    voteCount: 0,
-    imageUrl: "", // Default image
-    runtime: "", // You might want to add this to your form
-    ratings: "",
-    trailerPrivate: false,
-    moviePrivate: false,
-  };
-
-  try {
-    // Validate the data before sending (optional)
-    if (!validateMovieData(movieData)) {
-      throw new Error("Invalid movie data");
-    }
-
-    // Send the POST request to add the movie
-    const response = await fetch("http://localhost:3000/add-movie", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(movieData),
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to add movie");
-    }
-
-    // If successful, update the frontend
-    state.movies.push(movieData);
-    state.filteredMovies = [...state.movies];
-    updateMovieDisplay(); // Assuming this updates the movie list in your UI
-
-    // Close the modal
-    if (isBrowser) {
-      const modal = window.bootstrap.Modal.getInstance(
-        document.getElementById("addMovieModal")
-      );
-      modal.hide();
-    }
-
-    // Show success message (can be done with a toast or alert)
-    showToast("Movie added successfully!", "success");
-
-    // Reset the form
-    if (isBrowser) {
-      document.getElementById("add-movie-form").reset();
-    }
-  } catch (error) {
-    console.error("Error adding movie:", error);
-    showToast("Failed to add movie. Please try again.", "error");
-  }
 }
 
 export async function updateMovieListJson(movies) {
@@ -327,6 +275,15 @@ if (isBrowser)
     updateAuthUI();
     initializeAuth();
     loadUserFromSession();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("add-movie-form");
+      if (form) {
+        form.addEventListener("submit", saveMovie);
+      } else {
+        console.error("Form with id 'add-movie-form' not found.");
+      }
+    });
     
     // Settings modal
     const settingsLink = document.getElementById("settingsLink");
@@ -394,34 +351,6 @@ if (filterSelects) {
     select.addEventListener("change", applyFilters);
   });
 }
-if (isBrowser) {
-  // Filter listeners
-  document.querySelectorAll("#filter-section select").forEach((select) => {
-    select.addEventListener("change", applyFilters);
-  });
-  const loginBtn = document.getElementById("loginBtn");
-  if (loginBtn) {
-    loginBtn.addEventListener("click", () => {
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
-      login(username, password);
-    });
-  }
-  const logoutLink = document.getElementById("logoutLink");
-  if (logoutLink) {
-    logoutLink.addEventListener("click", logout);
-  }
-
-  const movieGrid = document.getElementById("movie-grid");
-  if (movieGrid) {
-    movieGrid.addEventListener("click", handleMovieInteraction);
-  }
-
-  // Movie interaction listeners
-  document
-    .getElementById("movie-grid")
-    .addEventListener("click", handleMovieInteraction);
-}
 
 if (isBrowser) {
   document
@@ -450,4 +379,6 @@ if (isBrowser) {
         document.getElementById("settingsModal")
       );
     });
+
 }
+
