@@ -5,6 +5,7 @@ if (typeof window === 'undefined' || typeof document === 'undefined') {
 
 // Import the displayMovies function from movies.mjs
 import { displayMovies } from './movies.mjs';
+            
 
 export function searchMovies() {
     document.addEventListener('DOMContentLoaded', () => {
@@ -27,16 +28,18 @@ export function searchMovies() {
             const searchTerm = searchInput.value.trim().toLowerCase();
 
             // Validate the search term
-            if (!searchTerm) {
-                displayMovies([]); // Clear display if no search term
+            if (!searchTerm || searchTerm.length === 0) {
+                console.log('No search term provided. '); // Debugging line
+                displayMovies(); // Display all movies
                 return;
             }
 
             // Fetch filtered results from the server
-            fetch(`/search-movies?query=${encodeURIComponent(searchTerm)}`)
+            fetch(`http://localhost:3000/search-movies?query=${encodeURIComponent(searchTerm)}`)
                 .then(response => response.json())
                 .then(filteredMovies => {
                     displayMovies(filteredMovies); // Render movies on the page
+                    console.log('Filtered movies:', filteredMovies); // Debugging line
                 })
                 .catch(error => {
                     console.error('Error fetching movies:', error);
@@ -46,3 +49,4 @@ export function searchMovies() {
         searchInput.addEventListener('input', debouncedSearch);
     });
 }
+searchMovies();

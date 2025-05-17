@@ -11,7 +11,7 @@ const movieController = {
 
         try {
             // Read movie list from JSON file
-            const movieListPath = path.join(__dirname, 'Data', 'movieList.json');
+            const movieListPath = path.join(__dirname, '..', 'Data', 'movieList.json');
             const movieList = JSON.parse(await fs.readFile(movieListPath, 'utf8'));
 
             // Filter movies based on the query
@@ -20,6 +20,10 @@ const movieController = {
                 (movie.director && movie.director.toLowerCase().includes(query)) ||
                 (movie.year && movie.year.toString().includes(query))
             );
+
+            if (filteredMovies.length === 0) {
+                return res.status(404).json({ error: `No movies found matching "${query}"` });
+            }
 
             res.status(200).json(filteredMovies);
         } catch (error) {

@@ -4,6 +4,13 @@ import { showError } from '../public/utils.mjs';
 // Check if running in a browser environment
 const isBrowser = typeof window !== 'undefined';
 
+if (isBrowser) {
+    document.addEventListener('DOMContentLoaded', () => {
+        // Load the full movie list on initial page load
+        fetchMovies();
+    });
+}
+
 // Helper function to create movie card HTML
 function createMovieCardHTML(movie) {
     const fallbackImage = '/path/to/default.jpg';
@@ -12,7 +19,7 @@ function createMovieCardHTML(movie) {
             <div class="card h-100" data-movie-id="${movie.id}">
                 <img src="${movie.imageUrl || fallbackImage}" 
                      class="card-img-top" alt="${movie.title || 'Movie Poster'}" loading="lazy"
-                     onerror="this.src='${fallbackImage}'">
+                     onerror="this.onerror=null; this.src='${fallbackImage}'">
                 <div class="card-body">
                     <h5 class="card-title">${movie.title || 'Untitled Movie'}</h5>
                     <p class="card-text">
@@ -54,8 +61,11 @@ function createMovieCardHTML(movie) {
 }
 
 // Update movie display dynamically
-function updateMovieDisplay() {
+function updateMovieDisplay(filteredMovies) {
     if (!isBrowser) return;
+
+    // Determine which list to render: use passed-in filteredMovies or fallback to state
+    const moviesToDisplay = Array.isArray(filteredMovies) ? filteredMovies : state.filteredMovies;
 
     const movieGrid = document.getElementById('movie-grid');
     const loadingPlaceholder = document.getElementById('loading-placeholder');
@@ -64,7 +74,7 @@ function updateMovieDisplay() {
     if (loadingPlaceholder) loadingPlaceholder.style.display = 'none';
 
     // Show fallback message if no movies are found
-    if (!state.filteredMovies || state.filteredMovies.length === 0) {
+    if (!moviesToDisplay || moviesToDisplay.length === 0) {
         movieGrid.innerHTML = `
             <div class="col-12 text-center">
                 <p>No movies found matching your criteria.</p>
@@ -74,15 +84,16 @@ function updateMovieDisplay() {
     }
 
     // Render movie cards dynamically
-    movieGrid.innerHTML = state.filteredMovies.map(createMovieCardHTML).join('');
+    movieGrid.innerHTML = moviesToDisplay.map(createMovieCardHTML).join('');
 }
 
 // Unified fetch function with fallback
-async function fetchMovies(source = '../Data/movieList.json') {
+async function fetchMovies(source = '/Data/movieList.json') {
     try {
         const response = await fetch(source);
         if (!response.ok) throw new Error('Failed to fetch movies');
 
+        console.log('📂 Fetching movies from:', source); // Debugging line
         const movies = await response.json();
         state.movies = movies;
         state.filteredMovies = [...movies]; // Default filtered list
@@ -94,10 +105,15 @@ async function fetchMovies(source = '../Data/movieList.json') {
 }
 
 // Explicit function to display movies (wrapper around updateMovieDisplay)
-function displayMovies() {
+function displayMovies(filteredMovies) {
     if (!isBrowser) return;
-    updateMovieDisplay();
+
+    const moviesList = typeof filteredMovies === 'undefined' ?
+    state.movies : filteredMovies;
+
+    updateMovieDisplay(moviesList);
 }
+
 
 // Export module functions, including displayMovies
 export { createMovieCardHTML, updateMovieDisplay, fetchMovies, displayMovies };
