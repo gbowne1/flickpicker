@@ -2,7 +2,7 @@ import { state } from "../public/state.mjs";
 import { showToast } from "../public/utils.mjs";
 import { login, logout, isAuthenticated, initializeAuth, loadUserFromSession } from "../public/auth.mjs";
 import { addToPlaylist } from "../public/playlist.mjs";
-import { searchMovies } from "../public/search.mjs";
+import { searchMoviesHandler } from './search.mjs';
 import { displayMovies, updateMovieDisplay } from "../public/movies.mjs";
 import { togglePasswordVisibility, updateAuthUI, closeModal, handleMovieSearch, toggleTheme } from "../public/ui.mjs";
 
@@ -268,14 +268,12 @@ if (isBrowser)
     initializeAuth();
     loadUserFromSession();
 
-    document.addEventListener("DOMContentLoaded", () => {
       const form = document.getElementById("add-movie-form");
       if (form) {
         form.addEventListener("submit", saveMovie);
       } else {
         console.error("Form with id 'add-movie-form' not found.");
       }
-    });
     
     // Settings modal
     const settingsLink = document.getElementById("settingsLink");
@@ -300,6 +298,15 @@ if (isBrowser)
         profileModal.show();
       });
     }
+
+    // Add the search handler ONCE
+    const searchInput = document.getElementById('movieSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', searchMoviesHandler);
+    }
+    
+    // Keep this to enable/disable the search button
+    //handleMovieSearch();
 
     // Add movie button visibility
     const addMovieButton = document.getElementById("addMovieButton");
