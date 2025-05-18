@@ -11,7 +11,7 @@ const movieController = {
 
         try {
             // Read movie list from JSON file
-            const movieListPath = path.join(__dirname, 'Data', 'movieList.json');
+            const movieListPath = path.join(__dirname, '..', 'Data', 'movieList.json');
             const movieList = JSON.parse(await fs.readFile(movieListPath, 'utf8'));
 
             // Filter movies based on the query
