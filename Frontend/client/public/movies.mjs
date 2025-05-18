@@ -12,7 +12,7 @@ function createMovieCardHTML(movie) {
             <div class="card h-100" data-movie-id="${movie.id}">
                 <img src="${movie.imageUrl || fallbackImage}" 
                      class="card-img-top" alt="${movie.title || 'Movie Poster'}" loading="lazy"
-                     onerror="this.src='${fallbackImage}'">
+                     onerror="this.onerror=null;this.src='${fallbackImage}'">
                 <div class="card-body">
                     <h5 class="card-title">${movie.title || 'Untitled Movie'}</h5>
                     <p class="card-text">
