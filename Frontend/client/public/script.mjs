@@ -22,14 +22,6 @@ const movieList = isNode
     : [];
 
 if (isBrowser) {
-  // Initial display (show all movies on page load)
-  displayMovies(movies);
-
-  // Event listener for search input
-  document
-    .getElementById("movieSearch")
-    .addEventListener("input", searchMovies);
-
   // Expose saveMoviesToFile to the global scope
   window.saveMovie = saveMovie;
 }
