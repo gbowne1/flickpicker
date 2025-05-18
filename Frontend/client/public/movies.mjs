@@ -94,8 +94,9 @@ async function fetchMovies(source = '../Data/movieList.json') {
 }
 
 // Explicit function to display movies (wrapper around updateMovieDisplay)
-function displayMovies() {
+function displayMovies(searchedMovies) {
     if (!isBrowser) return;
+    state.filteredMovies = searchedMovies;
     updateMovieDisplay();
 }
 
