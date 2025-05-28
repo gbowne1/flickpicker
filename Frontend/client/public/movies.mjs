@@ -103,18 +103,18 @@ function createMovieCardHTML(movie) {
                 <div class="card-footer">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-outline-primary vote-btn" 
+                            <button type="button" class="btn btn-sm btn-outline-primary text-light" 
                                     data-vote="up" ${state.currentUser ? '' : 'disabled'}>
                                 <i class="fas fa-thumbs-up"></i> 
                                 <span class="vote-count">${movie.voteCount || 0}</span>
                             </button>
-                            <button type="button" class="btn btn-sm btn-outline-primary" 
+                            <button type="button" class="btn btn-sm btn-outline-primary text-light" 
                                     onclick="showMovieDetails('${movie.id}')">
                                 <i class="fas fa-info-circle"></i> Details
                             </button>
                         </div>
                         <button type="button" 
-                            class="btn btn-sm btn-primary add-to-playlist-btn" 
+                            class="btn btn-sm btn-outline-primary add-to-playlist-btn text-light" 
                             onclick="addToPlaylist(${movie.id}, '${movie.title}', '${movie.imageUrl}')"
                             ${state.currentUser ? '' : 'disabled'}>
                             <i class="fas fa-plus"></i> Add to Playlist

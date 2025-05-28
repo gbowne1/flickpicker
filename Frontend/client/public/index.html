@@ -85,17 +85,15 @@
                                 <label for="movieSearch" id="searchLabel" class="visually-hidden">Search for movies</label>
                                 <input
                                     class="form-control"
-                                    type="search"
+                                    type="text"
                                     placeholder="Search movies..."
-                                    aria-label="Search movies"
                                     id="movieSearch"
                                     name="movieSearch"
                                     required
                                     minlength="2"
                                     autocomplete="off">
-                                <button class="btn btn-outline-success" type="submit" id="searchButton" disabled>
+                                <button class="btn btn-outline-success" type="submit" id="searchButton" aria-label="Search" disabled>
                                     <i class="fas fa-search" aria-hidden="true"></i>
-                                    <span class="visually-hidden">Search</span>
                                 </button>
                             </div>
                         </form>
@@ -140,6 +138,7 @@
     <main>
         <section id="filter-section">
             <h2>Filter Movies</h2>
+            <label for="genre-filter" class="visually-hidden">Genre filter</label>
             <select id="genre-filter">
                 <option value="">All Genres</option>
                 <option value="action">Action</option>
@@ -157,15 +156,18 @@
                 <option value="biography">Biography</option>
                 <option value="historical">Historical</option>
             </select>
+            <label for="year-filter" class="visually-hidden">Year filter</label>
             <select id="year-filter">
                 <option value="">All Years</option>
                 <!-- Options will be populated dynamically -->
             </select>
+            <label for="sort-order" class="visually-hidden">Sorting</label>
             <select id="sort-order">
                 <option value="title">Title</option>
                 <option value="year">Year</option>
                 <option value="runtime">Runtime</option>
             </select>
+            <label for="rating-filter" class="visually-hidden">Rating filter</label>
             <select id="rating-filter">
                 <option value="">All Ratings</option>
                 <option value="G">G</option>
@@ -174,11 +176,13 @@
                 <option value="R">R</option>
                 <option value="NC-17">NC-17</option>
             </select>
+            <label for="director-filter" class="visually-hidden">Directors filter</label>
             <select id="director-filter">
                 <option value="">All Directors</option>
                 <!-- Options will be populated dynamically -->
             </select>
-            <select id="cast-member-filter">
+            <label for="cast-member-filter" class="visually-hidden">Cast members filter</label>
+            <select id="cast-member-filter" aria-label="Cast members">
                 <option value="">All Cast Members</option>
                 <!-- Options will be populated dynamically -->
             </select>
@@ -193,7 +197,7 @@
                               data-bs-target="#addMovieModal" aria-label="Add new movie">
                           <i class="fas fa-plus" aria-hidden="true"></i> Add Movie
                       </button>
-                      <button class="btn btn-outline-primary" type="button" id="layout-toggle" 
+                      <button class="btn btn-outline-primary text-white border-0" type="button" id="layout-toggle" 
                               aria-label="Toggle view layout">
                           <i class="fas fa-list-ul" aria-hidden="true"></i>
                           <span>List View</span>
@@ -202,7 +206,7 @@
               </div>
           </div>
           
-          <div id="movie-table" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
+          <div id="movie-table" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4" role="presentation">
               <!-- Movies will be dynamically inserted here -->
           </div>
 
@@ -215,7 +219,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <a href="/" class="text-body text-decoration-none">
-                        <img src="assets/logos/logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
+                        <img src="assets/logos/logo.svg" alt="FlickPicker Logo" width="30" height="24" class="d-inline-block align-text-top">
                     </a>
                     <small class="d-block mt-2">&copy; 2024 MovieNight. All rights reserved.</small>
                 </div>

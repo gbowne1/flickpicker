@@ -104,6 +104,11 @@ header, nav {
   white-space: nowrap;
 }
 
+.btn-outline-success:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
 /* ================================
  Main Content
 ================================= */
@@ -118,6 +123,12 @@ main {
 ================================= */
 #movie-table {
   padding-top: 0.5rem;
+  pointer-events: none;
+}
+
+#movie-table .card,
+#movie-table button {
+  pointer-events: auto;
 }
 
 .movies-header {
@@ -147,6 +158,12 @@ main {
   height: 18.75rem;
   object-fit: cover;
   width: 100%;
+}
+
+.vote-btn:disabled,
+.add-to-playlist-btn:disabled {
+  cursor: default;
+  pointer-events: none;
 }
 
 /* ================================
