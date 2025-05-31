@@ -1,7 +1,8 @@
 import { login, logout, isAuthenticated, initializeAuth, loadUserFromSession } from "./auth.mjs";
 import { searchMovies } from "./search.mjs";
-import { togglePasswordVisibility, updateAuthUI, closeModal, handleMovieSearch, toggleTheme, initTheme, getPreferredTheme, setTheme } from "./ui.mjs";
-import { displayMovies, updateMovieDisplay } from "./movies.mjs";
+import { togglePasswordVisibility, updateAuthUI,  handleMovieSearch, toggleTheme, initTheme, getPreferredTheme, setTheme } from "./ui.mjs";
+import {  updateMovieDisplay } from "./movies.mjs";
+import { state } from "./state.mjs";
 
 const isBrowser = typeof window !== "undefined";
 const isNode = typeof window === "undefined";
@@ -12,6 +13,14 @@ if (isBrowser) {
 
   // Expose saveMoviesToFile to the global scope
   window.saveMovie = saveMovie;
+}
+
+//Added to check code runs on Node.js Environment 
+if (isNode) {
+  const fs = require('fs');
+} else {
+  // Browser-specific logic
+  console.log('Running in the browser');
 }
 
 // Filtering and Sorting

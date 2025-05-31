@@ -1,5 +1,5 @@
 import { state } from './state.mjs';
-import { showError, showToast } from './utils.mjs';
+import { showToast } from './utils.mjs';
 import { addToPlaylist } from './playlist.mjs';
 import { Pagination} from './pagination.mjs';
 import { isAuthenticated } from './auth.mjs';
