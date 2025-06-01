@@ -92,12 +92,14 @@ document.getElementById("layout-toggle").addEventListener("click", function () {
 
 // Helper function to create movie card HTML
 function createMovieCardHTML(movie) {
+    const movieTable = document.getElementById('movie-table');
+    const isList = movieTable.classList.contains("list-view");
     const fallbackImage = './assets/placeholder.jpg';
     return `
-        <div class="col">
-            <div class="card h-100" data-movie-id="${movie.id}">
+        <div class="col ${isList ? '' : 'w-100'} ">
+            <div class="${!isList ? 'list' : 'card h-100' } " data-movie-id="${movie.id}">
                 <img src="${movie.imageUrl || fallbackImage}" 
-                     class="card-img-top" alt="${movie.title || 'Movie Poster'}" loading="lazy"
+                     class="${ !isList ? 'list-img-top' : 'card-img-top'}" alt="${movie.title || 'Movie Poster'}" loading="lazy"
                      onerror="this.onerror=null; this.src='${fallbackImage}'">
                 <div class="card-body">
                     <h5 class="card-title">${movie.title || 'Untitled Movie'}</h5>
@@ -139,54 +141,6 @@ function createMovieCardHTML(movie) {
     `;
 }
 
-function createMovieListHTML(movie) {
-    const fallbackImage = './assets/placeholder.jpg';
-    return `
-        <div class="col w-100">
-            <div class="list" data-movie-id="${movie.id}">
-                <img src="${movie.imageUrl || fallbackImage}" 
-                     class="list-img-top" alt="${movie.title || 'Movie Poster'}" loading="lazy"
-                     onerror="this.onerror=null; this.src='${fallbackImage}'">
-                <div class="card-body">
-                    <h5 class="card-title">${movie.title || 'Untitled Movie'}</h5>
-                    <p class="card-text">
-                        <small class="text-muted">
-                            ${movie.year || 'Unknown Year'} • ${movie.runtime || 'Unknown Runtime'} • ${movie.ratings || 'Unrated'}
-                        </small>
-                    </p>
-                    <p class="card-text">${movie.category || 'General'}</p>
-                    <p class="card-text">
-                        <small class="text-muted">
-                            Requested by ${movie.requestedBy?.username || 'Unknown User'}
-                        </small>
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-outline-primary vote-btn" 
-                                    data-vote="up" ${state.currentUser ? '' : 'disabled'}>
-                                <i class="fas fa-thumbs-up"></i> 
-                                <span class="vote-count">${movie.voteCount || 0}</span>
-                            </button>
-                            <button type="button" class="btn btn-sm btn-outline-primary" 
-                                    onclick="showMovieDetails('${movie.id}')">
-                                <i class="fas fa-info-circle"></i> Details
-                            </button>
-                        </div>
-                     <button type="button" 
-                            class="btn btn-sm btn-primary add-to-playlist-btn" 
-                            onclick="addToPlaylist(${movie.id}, '${movie.title}', '${movie.imageUrl}')"
-                            ${state.currentUser ? '' : 'disabled'}>
-                            <i class="fas fa-plus"></i> Add to Playlist
-                        </button>
-                </div>
-            </div>
-            </div>
-        </div>
-    `;
-}
-
 // Update movie display dynamically
 function updateMovieDisplay() {
     const movieTable = document.getElementById('movie-table');
@@ -204,10 +158,10 @@ function updateMovieDisplay() {
         `;
         return;
     }
-    const isList = movieTable.classList.contains("list-view");
-    const renderMoviesPage =  isList ? createMovieCardHTML : createMovieListHTML;
+   
+    // const renderMoviesPage =  isList ? createMovieCardHTML : createMovieListHTML;
     // Render movie cards dynamically
-    movieTable.innerHTML = state.filteredMovies.map(renderMoviesPage).join('');
+    movieTable.innerHTML = state.filteredMovies.map(createMovieCardHTML).join('');
 }
 
 // Explicit function to display movies (wrapper around updateMovieDisplay)
