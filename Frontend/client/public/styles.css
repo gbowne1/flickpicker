@@ -131,11 +131,25 @@ main {
   width: auto;
 }
 
-.card {
+.card, .list {
   background: var(--card-bg);
   transition: transform var(--transition-speed);
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
   width: 100%;
+}
+
+.list {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.list-img-top{
+  height: auto;
+  object-fit: cover;
+  width: 100px;
+  border-radius: 0.5rem;
 }
 
 .card:hover {
@@ -281,8 +295,12 @@ footer a:hover {
     margin: 0.25rem 0;
   }
 
-  .card {
+  .card, .list {
     margin: 0 auto;
+  }
+
+  .list-img-top {
+    display: none;
   }
 
   .movies-header {
