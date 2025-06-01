@@ -158,7 +158,7 @@ function updateMovieDisplay() {
         `;
         return;
     }
-    
+
     // Render movie cards dynamically
     movieTable.innerHTML = state.filteredMovies.map(createMovieCardHTML).join('');
 }
