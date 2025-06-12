@@ -56,7 +56,11 @@ function handleMovieInteraction(event) {
     if (target.classList.contains("vote-btn")) {
         handleVote(movieId, target.dataset.vote);
     } else if (target.classList.contains("add-to-playlist-btn")) {
-        addToPlaylist(movieId);
+        const button = target.closest('.add-to-playlist-btn') || target;
+        const id = button.dataset.movieId;
+        const title = button.dataset.movieTitle;
+        const poster = button.dataset.moviePoster;
+        addToPlaylist(id, title, poster);
     }
 }
 
@@ -112,7 +116,9 @@ function createMovieCardHTML(movie) {
                         </div>
                         <button type="button" 
                             class="btn btn-sm btn-primary add-to-playlist-btn" 
-                            onclick="addToPlaylist(${movie.id}, '${movie.title}', '${movie.imageUrl}')"
+                            data-movie-id="${movie.id}"
+                            data-movie-title="${movie.title}"
+                            data-movie-poster="${movie.imageUrl || ''}"
                             ${state.currentUser ? '' : 'disabled'}>
                             <i class="fas fa-plus"></i> Add to Playlist
                         </button>
