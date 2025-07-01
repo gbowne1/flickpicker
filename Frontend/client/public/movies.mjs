@@ -74,14 +74,29 @@ function handleVote(movieId, voteType) {
     // Update UI or make API call to record vote
 }
 
+document.getElementById("layout-toggle").addEventListener("click", function () {
+  const container = document.getElementById("movie-table");
+  const icon = document.getElementById("view-icon");
+  const text = document.getElementById("toggle-view");
+  container.classList.toggle("list-view");
+  const isList = container.classList.contains("list-view");
+  const iconClassName = isList ? "fa-th" : "fa-list-ul";
+  icon.classList.remove("fa-list-ul", "fa-th");
+  icon.classList.add("fas", iconClassName);
+  text.textContent = isList ? "Grid View" : "List View";
+  updateMovieDisplay();
+});
+
 // Helper function to create movie card HTML
 function createMovieCardHTML(movie) {
-    const fallbackImage = '';
+    const movieTable = document.getElementById('movie-table');
+    const isList = movieTable.classList.contains("list-view");
+    const fallbackImage = './assets/placeholder.jpg';
     return `
-        <div class="col">
-            <div class="card h-100" data-movie-id="${movie.id}">
+        <div class="col ${isList ? '' : 'w-100'} ">
+            <div class="${!isList ? 'list' : 'card h-100' } " data-movie-id="${movie.id}">
                 <img src="${movie.imageUrl || fallbackImage}" 
-                     class="card-img-top" alt="${movie.title || 'Movie Poster'}" loading="lazy"
+                     class="${ !isList ? 'list-img-top' : 'card-img-top'}" alt="${movie.title || 'Movie Poster'}" loading="lazy"
                      onerror="this.onerror=null; this.src='${fallbackImage}'">
                 <div class="card-body">
                     <h5 class="card-title">${movie.title || 'Untitled Movie'}</h5>
