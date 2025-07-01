@@ -1,5 +1,5 @@
 import { state } from './state.mjs';
-import { showError, showToast } from './utils.mjs';
+import { showToast } from './utils.mjs';
 import { addToPlaylist } from './playlist.mjs';
 import { Pagination} from './pagination.mjs';
 import { isAuthenticated } from './auth.mjs';
@@ -39,9 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll("#filter-section select").forEach((select) => {
         select.addEventListener("change", applyFilters);
     });
-
-    const paginationSection = document.getElementById('movies-pagination-section');
-    const pagination = new Pagination(paginationSection, renderMoviesPage, DEFAULT_PAGE_SIZE, MOVIES_PER_PAGE_VALUES, 'movies-page-size-select');
 
     if (cachedElements.movieTable) {
         cachedElements.movieTable.addEventListener("click", handleMovieInteraction);
@@ -142,7 +139,7 @@ function createMovieCardHTML(movie) {
 }
 
 // Update movie display dynamically
-function updateMovieDisplay() {
+function updateMovieDisplay(previousFilteredMovies = null) {
     const movieTable = document.getElementById('movie-table');
     const loadingPlaceholder = document.getElementById('loading-placeholder');
 
@@ -161,12 +158,15 @@ function updateMovieDisplay() {
 
     // Render movie cards dynamically
     movieTable.innerHTML = state.filteredMovies.map(createMovieCardHTML).join('');
+
+    // If required and provided, set `state.filteredMovies` to previous value
+    if (previousFilteredMovies) state.filteredMovies = previousFilteredMovies;
 }
 
 // Explicit function to display movies (wrapper around updateMovieDisplay)
-function displayMovies(movieList) {
+function displayMovies(movieList, previousFilteredMovies = null) {
     state.filteredMovies = movieList;
-    updateMovieDisplay(movieList);
+    updateMovieDisplay(previousFilteredMovies);
 }
 
 async function loadMovies() {
@@ -178,7 +178,10 @@ async function loadMovies() {
             localStorage.setItem("moviesList", JSON.stringify(movies));
             state.movies = movies;
             state.filteredMovies = movies; // Default filtered list
-            updateMovieDisplay(); // Update UI after fetching
+            const paginationSection = document.getElementById('movies-pagination-section');
+            const pagination = new Pagination(paginationSection, renderMoviesPage, DEFAULT_PAGE_SIZE, MOVIES_PER_PAGE_VALUES, "movie-page-size-select"); // Initiates pagination once movie data has been successfully fetched
+            pagination.setTotalItems(state.filteredMovies.length) // Passes down amount of movies fetched for proper pagination setup
+            renderMoviesPage(1, DEFAULT_PAGE_SIZE); // Renders default movie card amount on first page load
             return;
         }
     } catch (error) {
@@ -333,7 +336,7 @@ function renderMoviesPage(page, pageSize) {
     const start = (page - 1) * pageSize;
     const end = start + pageSize;
     const pageItems = state.filteredMovies.slice(start, end);
-    displayMovies(pageItems);
+    displayMovies(pageItems, state.filteredMovies);
 }
 
 // Export module functions, including displayMovies
