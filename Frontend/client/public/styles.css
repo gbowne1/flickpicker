@@ -383,3 +383,8 @@ footer a:hover {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.filter{
+  display:flex;
+  flex-direction:column;
+}
