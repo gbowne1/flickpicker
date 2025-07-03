@@ -579,6 +579,135 @@
     </div>
     <div
       class="modal fade"
+      id="detailsModal"
+      tabindex="-1"
+      aria-labelledby="detailsModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="detailsModalLabel">Details</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              tabindex="-1"></button>
+          </div>
+          <div class="modal-body">
+            <div class="d-flex">
+              <div>
+                <img id="details-img" class="list-img-top">
+              </div>
+              <div class="mb-3">
+                <h4 id="details-title"></h4>
+                <div class="d-flex gap-2 my-2">
+                  <h6 id="details-year" class="card-text"></h6>
+                  <h6 id="details-category" class="card-text"></h6>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-1">
+              <div class="col-6">
+                <div class="d-flex gap-2 my-2">
+                  <small class="text-muted">Language</small>
+                  <h6 id="details-language" class="card-text"></h6>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="d-flex gap-2 my-2">
+                  <small class="text-muted">Date Watched</small>
+                  <h6 id="details-date-watched" class="card-text"></h6>
+                </div>
+              </div>
+            </div>
+             <div class="row mb-1">     
+                <div class="col-6">
+                  <div class="d-flex gap-2 my-2">
+                    <small class="text-muted">Requested By</small>
+                    <h6 id="details-requested-by" class="card-text"></h6>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="d-flex gap-2 my-2">
+                    <small class="text-muted">Subtitles</small>
+                    <h6 id="details-subtitles" class="card-text"></h6>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3"> 
+                <div class="col-6">
+                  <div class="d-flex gap-2 my-2">
+                    <small class="text-muted">Runtime</small>
+                    <h6 id="details-runtime" class="card-text"></h6>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="d-flex gap-2 my-2">
+                    <small class="text-muted">Ratings</small>
+                    <h6 id="details-ratings" class="card-text"></h6>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-12">
+                  <h6 class="font-weight-bold">Description</h6>
+                  <p id="details-description" class="text-muted font-weight-bold"></p>
+                </div>
+              </div>
+              <div class="row mb-3">
+                 <div class="col-12">
+                  <h6 class="fw-bold">External Links</h6>
+                  <div class="d-flex flex-wrap gap-2">
+                    <a href="#" target="_blank" id="details-imdb" class="badge bg-secondary text-white text-decoration-none p-2 cursor-pointer" tabindex="-1">
+                      IMDB
+                    </a>
+                    <a href="#" target="_blank" id="details-tmdb" class="badge bg-secondary text-white text-decoration-none p-2 cursor-pointer" tabindex="-1">
+                      TMDB
+                    </a>
+                    <a href="#" target="_blank" id="details-omdb" class="badge bg-secondary text-white text-decoration-none p-2 cursor-pointer" tabindex="-1">
+                      OMDB
+                    </a>
+                    <a href="#" target="_blank" id="details-movie-link" class="badge bg-secondary text-white text-decoration-none p-2 cursor-pointer" tabindex="-1">
+                      Movie Link
+                    </a>
+                    <a href="#" target="_blank" id="details-modern-trailer-link" class="badge bg-secondary text-white text-decoration-none p-2 cursor-pointer" tabindex="-1">
+                      Modern Trailer Link
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-12">
+                  <h6 class="font-weight-bold">Trailer</h6>
+                  <div class="ratio ratio-16x9">
+                  <iframe
+                    id="details-trailer"
+                    class="w-100"
+                    height="315"
+                    src=""
+                    title="YouTube Trailer"
+                    allowfullscreen
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+                  </iframe>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              tabindex="-1">
+              Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
       id="loginModal"
       tabindex="-1"
       aria-labelledby="loginModalLabel"
@@ -593,6 +722,7 @@
               class="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              tabindex="-1"
             ></button>
           </div>
           <div class="modal-body">
@@ -601,6 +731,7 @@
                 <label for="username" class="form-label">Username</label>
                 <input
                   type="text"
+                  tabindex="-1"
                   class="form-control"
                   id="username"
                   required
@@ -612,6 +743,7 @@
                   <input
                     type="password"
                     class="form-control"
+                    tabindex="-1"
                     id="password"
                     required
                   />
@@ -619,101 +751,108 @@
                     type="button"
                     class="btn btn-outline-secondary"
                     id="togglePassword"
+                    tabindex="-1"
                   >
                     <i class="fas fa-eye" id="eyeIcon"></i>
                   </button>
                 </div>
-                <div
-                  class="d-flex justify-content-center align-items-center gap-1 my-3"
-                >
+                <div class="d-flex justify-content-center align-items-center gap-1 my-3">
                   <p class="mb-0 text-black">Don't have an account?</p>
                   <a
                     class="text-black text-decoration-underline"
                     href="#"
-                    data-bs-toggle="modal"
-                    data-bs-target="#signupModal"
-                  >
+                    onclick="openModal('loginModal', 'signupModal')"
+                    tabindex="-1">
                     Create new account
                   </a>
                 </div>
               </div>
             </form>
           </div>
-
-          <!-- Sign Up Modal -->
-          <div
-            class="modal fade"
-            id="signupModal"
-            tabindex="-1"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Create New Account</h5>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body">
-                  <form id="signup-form">
-                    <div class="mb-3">
-                      <label for="newUsername" class="form-label"
-                        >Username</label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="newUsername"
-                        required
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label for="newEmail" class="form-label">Email</label>
-                      <input
-                        type="email"
-                        class="form-control"
-                        id="newEmail"
-                        required
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label for="newPassword" class="form-label"
-                        >Password</label
-                      >
-                      <input
-                        type="password"
-                        class="form-control"
-                        id="newPassword"
-                        required
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label for="confirmPassword" class="form-label"
-                        >Confirm Password</label
-                      >
-                      <input
-                        type="password"
-                        class="form-control"
-                        id="confirmPassword"
-                        required
-                      />
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                      Sign Up
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="loginBtn">
+            <button type="button" class="btn btn-primary" id="loginBtn" tabindex="-1">
               Login
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Sign Up Modal -->
+    <div
+      class="modal fade"
+      id="signupModal"
+      tabindex="-1"
+      aria-labelledby="signupModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Create New Account</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              tabindex="-1"
+              aria-label="Close"
+            ></button>
+          </div>
+        <div class="modal-body">
+            <form id="signup-form">
+              <div class="mb-3">
+                <label for="newUsername" class="form-label">Username</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="newUsername" 
+                  tabindex="-1"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="newEmail" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="newEmail"
+                  tabindex="-1"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="newPassword" class="form-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="newPassword" 
+                  tabindex="-1"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="confirmPassword"
+                  tabindex="-1"
+                  required
+                />
+              </div>
+              <div class="d-flex justify-content-center align-items-center gap-1 my-3">
+                <p class="mb-0 text-black">Already have an account?</p>
+                <a
+                  class="text-black text-decoration-underline"
+                  href="#"
+                  onclick="openModal('signupModal', 'loginModal')"
+                  tabindex="-1">
+                  Login
+                </a>
+              </div>      
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="signUpBtn" tabindex="-1">
+              Sign Up
             </button>
           </div>
         </div>
@@ -1217,6 +1356,22 @@
         } else {
           console.error("Form with id 'add-movie-form' not found.");
         }
+      });
+    </script>
+    <script>
+      function openModal(currentId, targetId) {
+        const current = bootstrap.Modal.getInstance(document.getElementById(currentId));
+        if (current) current.hide();
+
+        setTimeout(() => {
+          document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+          const target = new bootstrap.Modal(document.getElementById(targetId));
+          target.show();
+        }, 100); 
+      }
+      document.getElementById('detailsModal').addEventListener('hidden.bs.modal', function () {
+        const iframe = document.getElementById('details-trailer');
+        iframe.src = ''; 
       });
     </script>
     <!-- Service Worker (last script) -->

@@ -120,8 +120,7 @@ function createMovieCardHTML(movie) {
                                 <i class="fas fa-thumbs-up"></i> 
                                 <span class="vote-count">${movie.voteCount || 0}</span>
                             </button>
-                            <button type="button" class="btn btn-sm btn-outline-primary" 
-                                    onclick="showMovieDetails('${movie.id}')">
+                            <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detailsModal" onclick="showMovieDetails('${movie?.id}')">
                                 <i class="fas fa-info-circle"></i> Details
                             </button>
                         </div>
@@ -136,6 +135,37 @@ function createMovieCardHTML(movie) {
             </div>
         </div>
     `;
+}
+
+window.showMovieDetails = function(movieId) {
+    const movieList = JSON.parse(localStorage.getItem("moviesList"));
+    const currentMovie = movieList.filter(m => m.id === Number(movieId));
+    if (!currentMovie) return;
+
+    const trailerUrl = currentMovie[0].trailerLink || "";
+    let embedUrl = "";
+    const videoId = trailerUrl.split("/").pop();
+    embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    const fallbackImage = './assets/placeholder.jpg';
+
+    document.getElementById('details-img').src = fallbackImage;
+    document.getElementById('details-img').alt = currentMovie[0]?.title || "Untitled Movie";
+    document.getElementById('details-title').innerHTML = currentMovie[0]?.title || "Untitled Movie";
+    document.getElementById('details-year').innerHTML = currentMovie[0]?.year || "Unknown Year";
+    document.getElementById('details-category').innerHTML = currentMovie[0]?.category || "General";
+    document.getElementById('details-date-watched').innerHTML = currentMovie[0]?.dateWatched || "Unknown";
+    document.getElementById('details-language').innerHTML = currentMovie[0]?.language || "Unknown";
+    document.getElementById('details-requested-by').innerHTML = currentMovie[0]?.requestedBy.username || "Unknown User";
+    document.getElementById('details-subtitles').innerHTML = currentMovie[0]?.subtitles ? "Yes" : "No";
+    document.getElementById('details-description').innerHTML = "A short description about the movie will appear here.";
+    document.getElementById('details-imdb').href = currentMovie[0]?.imdbLink || "#";
+    document.getElementById('details-tmdb').href = currentMovie[0]?.tmdbLink || "#";
+    document.getElementById('details-omdb').href = currentMovie[0]?.omdbLink || "#";
+    document.getElementById('details-movie-link').href = currentMovie[0]?.movieLink || "#";
+    document.getElementById('details-modern-trailer-link').href = currentMovie[0]?.modernTrailerLink || "#";
+    document.getElementById('details-runtime').innerHTML = currentMovie[0]?.year || "Unknown Runtime";
+    document.getElementById('details-ratings').innerHTML = currentMovie[0]?.ratings || "Unknown Ratings";
+    document.getElementById('details-trailer').src = embedUrl || "";
 }
 
 // Update movie display dynamically

@@ -383,3 +383,14 @@ footer a:hover {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.filter{
+  display:flex;
+  flex-direction:column;
+}
+
+#details-img{
+  height: 75px;
+  margin-right: 16px;
+  width: 75px;
+}
