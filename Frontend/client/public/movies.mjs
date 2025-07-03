@@ -148,7 +148,7 @@ window.showMovieDetails = function(movieId) {
     embedUrl = `https://www.youtube.com/embed/${videoId}`;
     const fallbackImage = './assets/placeholder.jpg';
 
-    document.getElementById('details-img').src =  fallbackImage;
+    document.getElementById('details-img').src = fallbackImage;
     document.getElementById('details-img').alt = currentMovie[0]?.title || "Untitled Movie";
     document.getElementById('details-title').innerHTML = currentMovie[0]?.title || "Untitled Movie";
     document.getElementById('details-year').innerHTML = currentMovie[0]?.year || "Unknown Year";

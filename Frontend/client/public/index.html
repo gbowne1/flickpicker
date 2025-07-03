@@ -659,19 +659,19 @@
                  <div class="col-12">
                   <h6 class="fw-bold">External Links</h6>
                   <div class="d-flex flex-wrap gap-2">
-                    <a href="#" target="_blank" id="details-imdb" class="badge bg-secondary text-white text-decoration-none p-2 cursor-pointer">
+                    <a href="#" target="_blank" id="details-imdb" class="badge bg-secondary text-white text-decoration-none p-2 cursor-pointer" tabindex="-1">
                       IMDB
                     </a>
-                    <a href="#" target="_blank" id="details-tmdb" class="badge bg-secondary text-white text-decoration-none p-2 cursor-pointer">
+                    <a href="#" target="_blank" id="details-tmdb" class="badge bg-secondary text-white text-decoration-none p-2 cursor-pointer" tabindex="-1">
                       TMDB
                     </a>
-                    <a href="#" target="_blank" id="details-omdb" class="badge bg-secondary text-white text-decoration-none p-2 cursor-pointer">
+                    <a href="#" target="_blank" id="details-omdb" class="badge bg-secondary text-white text-decoration-none p-2 cursor-pointer" tabindex="-1">
                       OMDB
                     </a>
-                    <a href="#" target="_blank" id="details-movie-link" class="badge bg-secondary text-white text-decoration-none p-2 cursor-pointer">
+                    <a href="#" target="_blank" id="details-movie-link" class="badge bg-secondary text-white text-decoration-none p-2 cursor-pointer" tabindex="-1">
                       Movie Link
                     </a>
-                    <a href="#" target="_blank" id="details-modern-trailer-link" class="badge bg-secondary text-white text-decoration-none p-2 cursor-pointer">
+                    <a href="#" target="_blank" id="details-modern-trailer-link" class="badge bg-secondary text-white text-decoration-none p-2 cursor-pointer" tabindex="-1">
                       Modern Trailer Link
                     </a>
                   </div>
@@ -1369,6 +1369,10 @@
           target.show();
         }, 100); 
       }
+      document.getElementById('detailsModal').addEventListener('hidden.bs.modal', function () {
+        const iframe = document.getElementById('details-trailer');
+        iframe.src = ''; 
+      });
     </script>
     <!-- Service Worker (last script) -->
     <script type="module" src="../../../service-worker.js"></script>
