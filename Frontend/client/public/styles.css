@@ -142,11 +142,25 @@ main {
   width: auto;
 }
 
-.card {
+.card, .list {
   background: var(--card-bg);
   transition: transform var(--transition-speed);
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
   width: 100%;
+}
+
+.list {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.list-img-top{
+  height: auto;
+  object-fit: cover;
+  width: 100px;
+  border-radius: 0.5rem;
 }
 
 .card:hover {
@@ -257,9 +271,26 @@ footer a:hover {
 /* ================================
  Loading Animation
 ================================= */
-.spinner-border {
-  width: 3rem;
-  height: 3rem;
+
+
+#loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255,255,255,.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}
+
+@keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
 }
 
 /* ================================
@@ -298,8 +329,12 @@ footer a:hover {
     margin: 0.25rem 0;
   }
 
-  .card {
+  .card, .list {
     margin: 0 auto;
+  }
+
+  .list-img-top {
+    display: none;
   }
 
   .movies-header {
@@ -381,4 +416,9 @@ footer a:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.filter{
+  display:flex;
+  flex-direction:column;
 }

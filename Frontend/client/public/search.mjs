@@ -30,7 +30,8 @@ export function searchMovies() {
             // Validate the search term
             if (!searchTerm || searchTerm.length === 0) {
                 console.log('No search term provided. '); // Debugging line
-                displayMovies(); // Display all movies
+                const movieList = JSON.parse(localStorage.getItem("moviesList"));
+                displayMovies(movieList); // Display all movies
                 return;
             }
 

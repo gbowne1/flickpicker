@@ -1,5 +1,5 @@
 import { state } from './state.mjs';
-import { showError, showToast } from './utils.mjs';
+import { showToast } from './utils.mjs';
 import { addToPlaylist } from './playlist.mjs';
 import { Pagination} from './pagination.mjs';
 import { isAuthenticated } from './auth.mjs';
@@ -40,9 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
         select.addEventListener("change", applyFilters);
     });
 
-    const paginationSection = document.getElementById('movies-pagination-section');
-    const pagination = new Pagination(paginationSection, renderMoviesPage, DEFAULT_PAGE_SIZE, MOVIES_PER_PAGE_VALUES, 'movies-page-size-select');
-
     if (cachedElements.movieTable) {
         cachedElements.movieTable.addEventListener("click", handleMovieInteraction);
     }
@@ -59,7 +56,11 @@ function handleMovieInteraction(event) {
     if (target.classList.contains("vote-btn")) {
         handleVote(movieId, target.dataset.vote);
     } else if (target.classList.contains("add-to-playlist-btn")) {
-        addToPlaylist(movieId);
+        const button = target.closest('.add-to-playlist-btn') || target;
+        const id = button.dataset.movieId;
+        const title = button.dataset.movieTitle;
+        const poster = button.dataset.moviePoster;
+        addToPlaylist(id, title, poster);
     }
 }
 
@@ -77,14 +78,29 @@ function handleVote(movieId, voteType) {
     // Update UI or make API call to record vote
 }
 
+document.getElementById("layout-toggle").addEventListener("click", function () {
+  const container = document.getElementById("movie-table");
+  const icon = document.getElementById("view-icon");
+  const text = document.getElementById("toggle-view");
+  container.classList.toggle("list-view");
+  const isList = container.classList.contains("list-view");
+  const iconClassName = isList ? "fa-th" : "fa-list-ul";
+  icon.classList.remove("fa-list-ul", "fa-th");
+  icon.classList.add("fas", iconClassName);
+  text.textContent = isList ? "Grid View" : "List View";
+  updateMovieDisplay();
+});
+
 // Helper function to create movie card HTML
 function createMovieCardHTML(movie) {
-    const fallbackImage = '';
+    const movieTable = document.getElementById('movie-table');
+    const isList = movieTable.classList.contains("list-view");
+    const fallbackImage = './assets/placeholder.jpg';
     return `
-        <div class="col">
-            <div class="card h-100" data-movie-id="${movie.id}">
+        <div class="col ${isList ? '' : 'w-100'} ">
+            <div class="${!isList ? 'list' : 'card h-100' } " data-movie-id="${movie.id}">
                 <img src="${movie.imageUrl || fallbackImage}" 
-                     class="card-img-top" alt="${movie.title || 'Movie Poster'}" loading="lazy"
+                     class="${ !isList ? 'list-img-top' : 'card-img-top'}" alt="${movie.title || 'Movie Poster'}" loading="lazy"
                      onerror="this.onerror=null; this.src='${fallbackImage}'">
                 <div class="card-body">
                     <h5 class="card-title">${movie.title || 'Untitled Movie'}</h5>
@@ -108,14 +124,15 @@ function createMovieCardHTML(movie) {
                                 <i class="fas fa-thumbs-up"></i> 
                                 <span class="vote-count">${movie.voteCount || 0}</span>
                             </button>
-                            <button type="button" class="btn btn-sm btn-outline-primary text-light" 
-                                    onclick="showMovieDetails('${movie.id}')">
+                            <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detailsModal" onclick="showMovieDetails('${movie?.id}')">
                                 <i class="fas fa-info-circle"></i> Details
                             </button>
                         </div>
                         <button type="button" 
-                            class="btn btn-sm btn-outline-primary add-to-playlist-btn text-light" 
-                            onclick="addToPlaylist(${movie.id}, '${movie.title}', '${movie.imageUrl}')"
+                            class="btn btn-sm btn-primary add-to-playlist-btn" 
+                            data-movie-id="${movie.id}"
+                            data-movie-title="${movie.title}"
+                            data-movie-poster="${movie.imageUrl || ''}"
                             ${state.currentUser ? '' : 'disabled'}>
                             <i class="fas fa-plus"></i> Add to Playlist
                         </button>
@@ -126,8 +143,45 @@ function createMovieCardHTML(movie) {
     `;
 }
 
+window.showMovieDetails = function(movieId) {
+    const movieList = JSON.parse(localStorage.getItem("moviesList"));
+    const currentMovie = movieList.filter(m => m.id === Number(movieId));
+    if (!currentMovie) return;
+
+    const trailerUrl = currentMovie[0].trailerLink || "";
+   
+    function extractYouTubeVideoId(url) {
+      const regex = /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([^\s&?/]+)/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
+    }
+
+    const videoId = extractYouTubeVideoId(trailerUrl);
+    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    const fallbackImage = './assets/placeholder.jpg';
+
+    document.getElementById('details-img').src = fallbackImage;
+    document.getElementById('details-img').alt = currentMovie[0]?.title || "Untitled Movie";
+    document.getElementById('details-title').innerHTML = currentMovie[0]?.title || "Untitled Movie";
+    document.getElementById('details-year').innerHTML = currentMovie[0]?.year || "Unknown Year";
+    document.getElementById('details-category').innerHTML = currentMovie[0]?.category || "General";
+    document.getElementById('details-date-watched').innerHTML = currentMovie[0]?.dateWatched || "Unknown";
+    document.getElementById('details-language').innerHTML = currentMovie[0]?.language || "Unknown";
+    document.getElementById('details-requested-by').innerHTML = currentMovie[0]?.requestedBy.username || "Unknown User";
+    document.getElementById('details-subtitles').innerHTML = currentMovie[0]?.subtitles ? "Yes" : "No";
+    document.getElementById('details-description').innerHTML = "A short description about the movie will appear here.";
+    document.getElementById('details-imdb').href = currentMovie[0]?.imdbLink || "#";
+    document.getElementById('details-tmdb').href = currentMovie[0]?.tmdbLink || "#";
+    document.getElementById('details-omdb').href = currentMovie[0]?.omdbLink || "#";
+    document.getElementById('details-movie-link').href = currentMovie[0]?.movieLink || "#";
+    document.getElementById('details-modern-trailer-link').href = currentMovie[0]?.modernTrailerLink || "#";
+    document.getElementById('details-runtime').innerHTML = currentMovie[0]?.year || "Unknown Runtime";
+    document.getElementById('details-ratings').innerHTML = currentMovie[0]?.ratings || "Unknown Ratings";
+    document.getElementById('details-trailer').src = embedUrl || "";
+}
+
 // Update movie display dynamically
-function updateMovieDisplay() {
+function updateMovieDisplay(previousFilteredMovies = null) {
     const movieTable = document.getElementById('movie-table');
     const loadingPlaceholder = document.getElementById('loading-placeholder');
 
@@ -146,29 +200,42 @@ function updateMovieDisplay() {
 
     // Render movie cards dynamically
     movieTable.innerHTML = state.filteredMovies.map(createMovieCardHTML).join('');
+
+    // If required and provided, set `state.filteredMovies` to previous value
+    if (previousFilteredMovies) state.filteredMovies = previousFilteredMovies;
 }
 
 // Explicit function to display movies (wrapper around updateMovieDisplay)
-function displayMovies(movieList) {
+function displayMovies(movieList, previousFilteredMovies = null) {
     state.filteredMovies = movieList;
-    updateMovieDisplay(movieList);
+    updateMovieDisplay(previousFilteredMovies);
 }
 
 async function loadMovies() {
     let movies = [];
-
+    const spinner = document.getElementById('loading-spinner');
+    const movieTable = document.getElementById('movie-table');
     try {
+        if (spinner) spinner.style.display = 'inline-block';
+        if (movieTable) movieTable.style.display = 'none';
         movies = await fetchMovies();
         if (movies && movies.length > 0) {
             localStorage.setItem("moviesList", JSON.stringify(movies));
             state.movies = movies;
             state.filteredMovies = movies; // Default filtered list
-            updateMovieDisplay(); // Update UI after fetching
+            const paginationSection = document.getElementById('movies-pagination-section');
+            const pagination = new Pagination(paginationSection, renderMoviesPage, DEFAULT_PAGE_SIZE, MOVIES_PER_PAGE_VALUES, "movie-page-size-select"); // Initiates pagination once movie data has been successfully fetched
+            pagination.setTotalItems(state.filteredMovies.length) // Passes down amount of movies fetched for proper pagination setup
+            renderMoviesPage(1, DEFAULT_PAGE_SIZE); // Renders default movie card amount on first page load
             return;
         }
     } catch (error) {
         console.error('Error fetching movies:', error);
         showToast('Failed to fetch movies. Please try again later.', 'error');
+     }finally {
+    //     // Hide spinner and show movie table
+        if (spinner) spinner.style.display = 'none';
+        if (movieTable) movieTable.style.display = 'flex';
     }
 
     try {
@@ -318,7 +385,7 @@ function renderMoviesPage(page, pageSize) {
     const start = (page - 1) * pageSize;
     const end = start + pageSize;
     const pageItems = state.filteredMovies.slice(start, end);
-    displayMovies(pageItems);
+    displayMovies(pageItems, state.filteredMovies);
 }
 
 // Export module functions, including displayMovies

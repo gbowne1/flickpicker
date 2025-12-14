@@ -3,13 +3,13 @@
     "short_name": "FlickPicker",
     "dir": "ltr",
     "lang": "en",
-    "start_url": "http://127.0.0.1:5501/Frontend/client/public/index.html",
+    "start_url": "/",
     "display": "browser",
     "orientation": "any",
     "theme_color": "#4a90e2",
     "background_color": "#ffffff",
-    "scope": "http://127.0.0.1:5501/Frontend/client/public/",
-    "id": "http://127.0.0.1:5501/Frontend/client/public/index.html",
+    "scope": "/",
+    "id": "/",
     "icons":
     [
         {
