@@ -281,7 +281,7 @@
 	// Controls the delay in milliseconds after which the hover is shown.
 	"editor.hover.delay": 300,
 	// Controls whether the hover is shown.
-	"editor.hover.enabled": true,
+	"editor.hover.enabled": "on",
 	// Controls the delay in milliseconds after which the hover is hidden.
 	"editor.hover.hidingDelay": 300,
 	// Controls whether the hover should remain visible when mouse is moved over it.
@@ -348,7 +348,7 @@
 	// Lines above this length will not be tokenized for performance reasons
 	"editor.maxTokenizationLineLength": 20000,
 	// Controls whether the minimap is hidden automatically.
-	"editor.minimap.autohide": false,
+	"editor.minimap.autohide": "none",
 	// Controls whether the minimap is shown.
 	"editor.minimap.enabled": true,
 	// Limit the width of the minimap to render at most a certain number of columns.
