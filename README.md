@@ -21,6 +21,15 @@ To serve everything in development without VSCode:
 2. Host the root directory on a port other than 3000 using `python -m http.server 8080` or [live-server](https://www.npmjs.com/package/live-server) (if you want hot-reload).
 3. Navigate to `localhost:8080/Frontend/client/public` in a browser
 
+⚠️ **Important**
+The frontend in `Frontend/client` is currently **not configured to run as a standalone
+Webpack dev server**.
+Although a `package.json` and Webpack scripts exist, the Webpack configuration and
+entry point are incomplete. Running `npm start` inside `Frontend/client` will fail.
+For now, frontend development is done by opening the static HTML files directly
+(see instructions below) or by serving them via the backend.
+
+
 ## TODO
 
 This project has plenty left to be done. If you would like to contribute to this project, you're welcome to contribute this
